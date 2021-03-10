@@ -1,35 +1,92 @@
 "use sctrict";  
 
 window.addEventListener('DOMContentLoaded', () => {
+
+    /* ------------- TABS -------------*/
+    // Переменные
+    const   tabs = document.querySelectorAll('.tabheader__item'),
+            tabsContent = document.querySelectorAll('.tabcontent'),
+            tabsParent = document.querySelector('.tabheader__items');
+    // Функции
+    const   hideTabContent = () => {
+                tabsContent.forEach(item => {
+                    item.classList.add('hide');
+                    item.classList.remove('show', 'fade');
+                });
+                tabs.forEach(item => {
+                    item.classList.remove('tabheader__item_active');
+                });
+            },
+
+            showTabContent = (i = 0) => {
+                tabsContent[i].classList.add('show', 'fade');
+                tabsContent[i].classList.remove('hide');
+                tabs[i].classList.add('tabheader__item_active');
+            };
     
-    const   now = new Date();   // Ориентируется на локальную время и дату
+    hideTabContent();
+    showTabContent();
 
-    // Получение даты
-    console.log(now);
-    console.log(now.getFullYear()); // Год (4-х значный всегда)
-    console.log(now.getMonth());    // Месяц
-    console.log(now.getDate());     // Число
-    console.log(now.getDay());      // День недели (начиная с воскресенья)
-    console.log(now.getHours());    // Часы (в соответсвии с местным часовым поясом)
-    console.log(now.getUTCHours()); // День недели (в соответсвии с 0-вым часовым поясом)
+    tabsParent.addEventListener('click', (event) => {
+        if (event.target && event.target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (event.target == item) {
+                    hideTabContent();
+                    showTabContent(i);
+                }
+            });
+        }
+    });
 
-    console.log(now.getTimezoneOffset()); // Разница с 0-вым часовым поясом
-    console.log(now.getTime());           // Кол-во миллисекунд с 0-вой даты (Date(0))
+    /* ------------- TIMER ------------*/
+    const deadLine = '2021-05-20';
 
-    // Установление даты - есть автоисправление
-    console.log(now.setHours(18, 40)); // Установка часов (опционально минут)
+    const getTimeRemaining = (endTime) => {
+        const   time = Date.parse(endTime) - Date.parse(new Date()),
+                days = Math.floor(time / (1000 * 60 * 60 * 24)),
+                hours = Math.floor((time / (1000 * 60 * 60)) % 24),
+                minutes = Math.floor((time / (1000 * 60)) % 60),
+                seconds = Math.floor((time / 1000) % 60);
 
-    const   now02 = new Date('2021-04-10'); 
-    // new Date.parse('2021-04-10');    // Равен строке 22
-
-    let start = new Date();
-    
-    for (let i = 0; i < 10000000; i++) {
-        let some = i ** 2;
+        return {
+            'total': time,
+            'days': days,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds
+        };
     }
 
-    let end = new Date();
-    alert(`Цикл отработал за ${end - start} миллисекунд.`);
-    
+    const getZero = (num) => {
+        if (num >= 0 && num < 10) {
+            return `0${num}`;
+        } else {
+            return num;
+        }
+    }
+
+    const setClock = (selector, endTime) => {
+        const   timer = document.querySelector(selector),
+                days = timer.querySelector('#days'),
+                hours = timer.querySelector('#hours'),
+                minutes = timer.querySelector('#minutes'),
+                seconds = timer.querySelector('#seconds'),
+                timeInterval = setInterval(updateClock, 1000);
+
+        updateClock();
+
+        function updateClock() {
+            const time = getTimeRemaining(endTime);
+
+            days.innerHTML = getZero(time.days);
+            hours.innerHTML = getZero(time.hours);
+            minutes.innerHTML = getZero(time.minutes);
+            seconds.innerHTML = getZero(time.seconds);
+
+            if (time.total <= 0) clearInterval(timeInterval);
+        }
+    }
+
+    setClock('.timer', deadLine);
 
 });
