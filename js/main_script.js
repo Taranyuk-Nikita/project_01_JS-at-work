@@ -2,38 +2,34 @@
 
 window.addEventListener('DOMContentLoaded', () => {
     
-    const   btn = document.querySelector('.btn');
-    let     timerID_01,
-            i = 0,
-            id = setTimeout(function log() {
-                console.log('I`m Batman!');
-                id = setTimeout(log, 500);
-            }, 500);
+    const   now = new Date();   // Ориентируется на локальную время и дату
 
-    btn.addEventListener('click', (event) => {
-        timerID_01 = setInterval(logger02, 2000);
-    });
+    // Получение даты
+    console.log(now);
+    console.log(now.getFullYear()); // Год (4-х значный всегда)
+    console.log(now.getMonth());    // Месяц
+    console.log(now.getDate());     // Число
+    console.log(now.getDay());      // День недели (начиная с воскресенья)
+    console.log(now.getHours());    // Часы (в соответсвии с местным часовым поясом)
+    console.log(now.getUTCHours()); // День недели (в соответсвии с 0-вым часовым поясом)
 
-    const   logger01 = () => {
-                console.log('I`m  timerID4.')
-            },
-            logger02 = () => {
-                if (i == 3) clearInterval(timerID_01);
-                console.log('I`m BooBs.');
-                i++;
-            };
+    console.log(now.getTimezoneOffset()); // Разница с 0-вым часовым поясом
+    console.log(now.getTime());           // Кол-во миллисекунд с 0-вой даты (Date(0))
 
-    const   timerID1 = setTimeout(function() {
-                console.log('I`m  timerID1');
-            }, 2000),
-            timerID2 = setTimeout(function(text) {
-                console.log(text);
-            }, 4000 ,'I`m  timerID2'),
-            timerID3 = setTimeout(function(text) {
-                console.log(text);
-            }, 5000 ,'I`m  timerID3'),
-            timerID4 = setTimeout(logger01, 6000);
+    // Установление даты - есть автоисправление
+    console.log(now.setHours(18, 40)); // Установка часов (опционально минут)
+
+    const   now02 = new Date('2021-04-10'); 
+    // new Date.parse('2021-04-10');    // Равен строке 22
+
+    let start = new Date();
     
-    clearInterval(timerID3);
+    for (let i = 0; i < 10000000; i++) {
+        let some = i ** 2;
+    }
+
+    let end = new Date();
+    alert(`Цикл отработал за ${end - start} миллисекунд.`);
+    
 
 });
