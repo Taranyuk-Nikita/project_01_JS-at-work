@@ -1,4 +1,4 @@
-"use sctrict";  
+"use strict";  
 
 window.addEventListener('DOMContentLoaded', () => {
 
