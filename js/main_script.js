@@ -2,91 +2,32 @@
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    /* ------------- TABS -------------*/
-    // Переменные
-    const   tabs = document.querySelectorAll('.tabheader__item'),
-            tabsContent = document.querySelectorAll('.tabcontent'),
-            tabsParent = document.querySelector('.tabheader__items');
-    // Функции
-    const   hideTabContent = () => {
-                tabsContent.forEach(item => {
-                    item.classList.add('hide');
-                    item.classList.remove('show', 'fade');
-                });
-                tabs.forEach(item => {
-                    item.classList.remove('tabheader__item_active');
-                });
-            },
+    const   box = document.querySelector('.box'),
+            btn = document.querySelector('button');
 
-            showTabContent = (i = 0) => {
-                tabsContent[i].classList.add('show', 'fade');
-                tabsContent[i].classList.remove('hide');
-                tabs[i].classList.add('tabheader__item_active');
-            };
-    
-    hideTabContent();
-    showTabContent();
+    // const   width = box.clientWidth,
+    //         height = box.clientHeight;
+    // const   width = box.offsetWidth,
+    //         height = box.offsetHeight;
+    // const   width = box.scrollWidth,
+    //         height = box.scrollHeight;
+    const   width = box.scrollWidth,
+            height = box.scrollHeight;
 
-    tabsParent.addEventListener('click', (event) => {
-        if (event.target && event.target.classList.contains('tabheader__item')) {
-            tabs.forEach((item, i) => {
-                if (event.target == item) {
-                    hideTabContent();
-                    showTabContent(i);
-                }
-            });
-        }
+    console.log(`${width}, ${height}`);    
+
+    btn.addEventListener('click', () => {
+        // box.style.height = box.scrollHeight + 'px';
+        console.log(box.scrollTop);
     });
 
-    /* ------------- TIMER ------------*/
-    const deadLine = '2021-05-20';
+    console.log(box.getBoundingClientRect().top);
 
-    const getTimeRemaining = (endTime) => {
-        const   time = Date.parse(endTime) - Date.parse(new Date()),
-                days = Math.floor(time / (1000 * 60 * 60 * 24)),
-                hours = Math.floor((time / (1000 * 60 * 60)) % 24),
-                minutes = Math.floor((time / (1000 * 60)) % 60),
-                seconds = Math.floor((time / 1000) % 60);
+    const style = window.getComputedStyle(box);
+    console.log(style.display);
 
-        return {
-            'total': time,
-            'days': days,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds
-        };
-    }
-
-    const getZero = (num) => {
-        if (num >= 0 && num < 10) {
-            return `0${num}`;
-        } else {
-            return num;
-        }
-    }
-
-    const setClock = (selector, endTime) => {
-        const   timer = document.querySelector(selector),
-                days = timer.querySelector('#days'),
-                hours = timer.querySelector('#hours'),
-                minutes = timer.querySelector('#minutes'),
-                seconds = timer.querySelector('#seconds'),
-                timeInterval = setInterval(updateClock, 1000);
-
-        updateClock();
-
-        function updateClock() {
-            const time = getTimeRemaining(endTime);
-
-            days.innerHTML = getZero(time.days);
-            hours.innerHTML = getZero(time.hours);
-            minutes.innerHTML = getZero(time.minutes);
-            seconds.innerHTML = getZero(time.seconds);
-
-            if (time.total <= 0) clearInterval(timeInterval);
-        }
-    }
-
-    setClock('.timer', deadLine);
+    console.log(document.documentElement.scrollTop);
+    window.scrollTo(0, 400); // относительно начала странице (самый верхний левый угол)
+    window.scrollBy(0, 400); // Относительно положения на странице
 
 });
