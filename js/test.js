@@ -1,84 +1,37 @@
-"use strict";  // В предидущих конспектах ошибка!!!
+"use strict";  
 
 window.addEventListener('DOMContentLoaded', () => {
     
-    // 1) Обычная функция: this = window, однако вместе с "use strict" this = undefined
-    function showThis(a, b) {
-        console.log(this);
-        function sum () {
-            console.log(this);
-            return a + b; 
+    class Rectangle {
+        constructor(height, width) {
+            this.height = height;
+            this.width = width;           
         }
-        console.log(sum());
-    }
-    showThis(1, 1);
-    console.log('----------------------------------------------------------------');
 
-    // 2) Контекст у методов объекта - сам объект
-    const   obj = {
-        a: 20,
-        b: 15,
-        sum: function() {
-            console.log(this);
+        calcArea() {
+            return this.height * this.width;
         }
-    };
-    obj.sum();
-    console.log('----------------------------------------------------------------');
-
-    // 3) This в конструкторах и классах это новый экземпляр объекта
-    function User(name, id) {
-        this.name = name;
-        this.id = id;
-        this.human = true;
-        this.hello = () => {
-            console.log(`Hello ${this.name}.`)
-        };
     }
-    User.prototype.exit = function() {
-        console.log(`User ${this.name}[${this.id}] has left.`);
-    } 
-    const Nikita = new User('Nikita', 21);
-    Nikita.hello();
-    Nikita.exit();
-    console.log('----------------------------------------------------------------');
 
-    // 4) Ручная привязка: call, apply, bind
-    function sayName(surname) {
-        console.log(this);
-        console.log(`${this.name} ${surname}`);
-    }
-    const user01 = {
-        name: 'Nikita'
-    };
-    sayName.call(user01, 'Taranyuk');
-    sayName.apply(user01, ['Taranyuk']);
-    function counter(num){
-        return this * num;
-    }
-    const double = counter.bind(2);
-    console.log(double(3));
-    console.log(double(10));
-    console.log('----------------------------------------------------------------');
-
-
-    const btn = document.querySelector('[data-someBTN]');
-    // * event.target = this
-    btn.addEventListener('click', function(){
-        console.log(this);
-    });
-    // ** При стрелочных функций теряется контекст вызова, и по этому нужно внимательно следить за this
-    const newSomeObj = {
-        num: 5,
-        sayNumber: function() {
-            const say = () => {
-                console.log(this);
-            };
-            say();
+    class ColoredRectangleWithText extends Rectangle {
+        constructor(height, width, text, bgColor) {
+            super(height, width);
+            this.text = text;
+            this.bgColor = bgColor;
         }
-    };
-    newSomeObj.sayNumber();
-    // *** Сокращённая запись стрелочной функции
-    const calcDouble = a => a * 2;
-    console.log(calcDouble(2));
+
+        showMyProps() {
+            console.log(`Текст: ${this.text}, Цвет: ${this.bgColor}`);
+        }
+    }
+
+    const div = new ColoredRectangleWithText(25, 10, "Hi", 'red');
+    div.showMyProps();
+    console.log(div.calcArea());
+
+    const   square = new Rectangle(10, 10);
+    const   square01 = new Rectangle(12, 17);
+    console.log(square.calcArea());
+    console.log(square01.calcArea());
 
 });
