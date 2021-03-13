@@ -2,16 +2,18 @@
 
 window.addEventListener('DOMContentLoaded', () => {
 
-    const log = function(a, b, ...rest) {
-        console.log(a, b, rest);
-    }
-
-    log('basic', 'test', 'getter', 'setter', 'render');
-
-    function calcORdouble(number, basis = 2) {
-        console.log(number * basis);
-    }
-    calcORdouble(3,3);
-    calcORdouble(3);
+    const persone = {
+        name: 'Nikita',
+        telephone : '+7 999 999 99 99',
+        parants: {
+            mama: 'Lena',
+            dady: 'Igor'
+        }
+    };
+    console.log(JSON.parse(JSON.stringify(persone)));
+    const clone = (JSON.parse(JSON.stringify(persone)));
+    clone.parants.mama = "Elena";
+    console.log(clone);
 
 });
+
