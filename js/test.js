@@ -1,56 +1,46 @@
 "use strict";  
 
-console.log('запрос данных...');
+// Filter
+const names = ['Nikita', 'Alex', 'Stepan', "Ilya", 'Nikolai', 'Elena', 'Ksenia', 'John', 'Dezdemona', 'Gerederuda'];
 
-const request = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        console.log('Подготовка данных...');
-
-        const product = {
-            name: 'TV',
-            price: 30000
-        };
-
-        resolve(product);
-
-    }, 2000);
+const shortNames = names.filter((name) => {
+    return name.length < 5;
 });
 
-request.then((product) => {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            product.status = 'order';
-            resolve(product);
-            // reject();
-        }, 2000);
-    });
-}).then(data => {
-    data.modify = true;
-    return data;
-}).then((data) => {
-    console.log(data);
-}).catch(() => {
-    console.error('Произошла ошибка!!!');
-}).finally(() => {
-    console.log(`Данные успешно получены!`);
-});
+console.log(names);
+console.log(shortNames);
 
-// All и Race
-const test = time => {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(), time);
-    })
-};
+// Map
+const answers = ['TAranyuk', 'AnnA', 'Evgesh@'];
 
-test(1000).then(() => console.log(`1000 ms`));
-test(2000).then(() => console.log(`2000 ms`));
+const result = answers.map(item => item.toLowerCase());
 
-// Пока все не загрузятся
-Promise.all([test(1000), test(2000)]).then(() => {
-    console.log('all');
-});
+console.log(answers);
+console.log(result);
 
-// Кто быстрее
-Promise.race([test(5000), test(3000)]).then(() => {
-    console.log('RACE!!!');
-});
+// every/some
+const someVar = [4, 'owo', '908123', 'rfwfwaeqfwqf'];
+console.log(someVar.some(item => typeof(item) === 'number'));
+console.log(someVar.every(item => typeof(item) === 'number'));
+
+// Reduce
+const numbers = [1, 5, 2, 13, 2, 12];
+
+const res = numbers.reduce((sum, current) => {
+    return sum + current; 
+}, 5);
+
+console.log(res);
+
+const someObject = {
+    ivan: 'persone',
+    ann: 'persone',
+    dog: 'animal',
+    cat: 'animal'
+}
+
+const newArray = Object.entries(someObject)
+    .filter((item) => item[1] === 'persone')
+    .map(item => item[0]);
+
+console.log(newArray);
