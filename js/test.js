@@ -1,46 +1,41 @@
 "use strict";  
 
-// Filter
-const names = ['Nikita', 'Alex', 'Stepan', "Ilya", 'Nikolai', 'Elena', 'Ksenia', 'John', 'Dezdemona', 'Gerederuda'];
+// localStorage.setItem('number01', 5); // записать в localStorage
+// localStorage.setItem('number02', 6);
 
-const shortNames = names.filter((name) => {
-    return name.length < 5;
+// localStorage.removeItem('number');  // удалить конкретный ключ из localStorage
+// localStorage.clear(); // очистить весь localStorage
+
+// console.log(localStorage.getItem('number')); // получить ключ из localStorage
+
+const   checkbox = document.querySelector('#checkbox'),
+        form = document.querySelector('form'),
+        change = document.querySelector('#color');
+
+if (localStorage.getItem('isChecked')) checkbox.checked = true;
+
+if (localStorage.getItem('bg') === 'changed') form.style.backgroundColor = 'red';
+
+checkbox.addEventListener('change', () => {
+    localStorage.setItem('isChecked', true);
 });
 
-console.log(names);
-console.log(shortNames);
+change.addEventListener('click', () => {
+    if (localStorage.getItem('bg') === 'changed') {
+        localStorage.removeItem('bg');
+        form.style.backgroundColor = '#ffffff';
+    } else {
+        localStorage.setItem('bg', 'changed');
+        form.style.backgroundColor = 'red';
+    }
+});
 
-// Map
-const answers = ['TAranyuk', 'AnnA', 'Evgesh@'];
+const persone = {
+    name: 'jeck',
+    age: 25
+};
 
-const result = answers.map(item => item.toLowerCase());
+const loginPersone = JSON.stringify(persone);
+localStorage.setItem('alex', loginPersone);
 
-console.log(answers);
-console.log(result);
-
-// every/some
-const someVar = [4, 'owo', '908123', 'rfwfwaeqfwqf'];
-console.log(someVar.some(item => typeof(item) === 'number'));
-console.log(someVar.every(item => typeof(item) === 'number'));
-
-// Reduce
-const numbers = [1, 5, 2, 13, 2, 12];
-
-const res = numbers.reduce((sum, current) => {
-    return sum + current; 
-}, 5);
-
-console.log(res);
-
-const someObject = {
-    ivan: 'persone',
-    ann: 'persone',
-    dog: 'animal',
-    cat: 'animal'
-}
-
-const newArray = Object.entries(someObject)
-    .filter((item) => item[1] === 'persone')
-    .map(item => item[0]);
-
-console.log(newArray);
+console.log(JSON.parse(localStorage.getItem('alex')));
