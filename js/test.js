@@ -1,41 +1,23 @@
 "use strict";  
 
-// localStorage.setItem('number01', 5); // записать в localStorage
-// localStorage.setItem('number02', 6);
+// new RegExp('pattern', 'flags');
+// /pattern/f[i, g, m]
 
-// localStorage.removeItem('number');  // удалить конкретный ключ из localStorage
-// localStorage.clear(); // очистить весь localStorage
+const ans = prompt('Введите ваше имя');
+// const pass = prompt('password:');
+const reg = /\d/g;
 
-// console.log(localStorage.getItem('number')); // получить ключ из localStorage
+// console.log(ans.search(reg));
+console.log(ans.match(reg));
+// console.log(pass.replace(/./g, "*"));
+// console.log('12-34-56'.replace(/-/g, ":"));
 
-const   checkbox = document.querySelector('#checkbox'),
-        form = document.querySelector('form'),
-        change = document.querySelector('#color');
+console.log(reg.test(ans));
 
-if (localStorage.getItem('isChecked')) checkbox.checked = true;
+// \d - digits = цифры  \D - не цифры
+// \w = все буквы       \W - не буквы
+// \s = пробелы         \S - не пробелы
 
-if (localStorage.getItem('bg') === 'changed') form.style.backgroundColor = 'red';
+const str = "My name is R2D2";
 
-checkbox.addEventListener('change', () => {
-    localStorage.setItem('isChecked', true);
-});
-
-change.addEventListener('click', () => {
-    if (localStorage.getItem('bg') === 'changed') {
-        localStorage.removeItem('bg');
-        form.style.backgroundColor = '#ffffff';
-    } else {
-        localStorage.setItem('bg', 'changed');
-        form.style.backgroundColor = 'red';
-    }
-});
-
-const persone = {
-    name: 'jeck',
-    age: 25
-};
-
-const loginPersone = JSON.stringify(persone);
-localStorage.setItem('alex', loginPersone);
-
-console.log(JSON.parse(localStorage.getItem('alex')));
+console.log(str.match(/\w\d\w\d/ig));
